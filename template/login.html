@@ -1,0 +1,45 @@
+{{template "header.html"}}
+<div class="row">
+	<div class="span6 offset3">
+	<form class="form-horizontal" id="form" method="post">
+		<div class="hide alert alert-error" id="hint">
+  			<button type="button" class="close" data-dismiss="alert">&times;</button>
+  			Username or password is incorrect!
+		</div>
+
+		<div class="control-group">
+    		<label class="control-label" for="inputUser">User</label>
+    		<div class="controls">
+      			<input type="text" id="inputUser" name="username" placeholder="Username" required>
+    		</div>
+  		</div>
+
+  		<div class="control-group">
+    		<label class="control-label" for="inputPassword">Password</label>
+    		<div class="controls">
+      			<input type="password" id="inputPassword" name="password" placeholder="Password" required>
+    		</div>
+  		</div>
+
+  		<div class="control-group">
+    		<div class="controls">
+      			<button id="btnSubmit" class="btn">Sign in</button>
+    		</div>
+  		</div>
+	</form>
+	</div>
+</div>
+
+<script>
+$('form').submit(function(){
+	$.post("/archiver/login",$(this).serialize(),function(data){
+		if (data == "err") {
+			$("#hint").show();
+		}else {
+			window.location.href=data;
+		};
+	});
+	return false;
+});
+</script>
+{{template "footer.html"}}

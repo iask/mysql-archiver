@@ -1,0 +1,43 @@
+    {{template "header.html" .}}
+    
+    
+    <div id="table"> </div>
+
+    <div id="JobsTable">
+      <table class="table table-striped table-hover table-condensed table-bordered">
+        <thead>
+          <tr>
+    	      <th>#</th> 
+	      <th>任务ID</th> 
+              <th>任务名</th> 
+              <th>Cron规则</th> 
+              <th>运行ID</th> 
+              <th>开始时间</th>
+              <th>结束时间</th> 
+              <th>运行状态</th> 
+              <th>主机名</th> 
+          </tr>
+        </thead>
+      
+        <tbody>
+        {{with .Result}}
+          {{range $n, $result := .}}
+          <tr>
+    	<th><div id="num_{{$n}}">{{$n}}</div></th>
+            <th><div id="schd_id_{{.SchdId}}">{{.SchdId}}</div></th>
+	    <th><div id="schd_name_{{.SchdId}}">{{.SchdName}}</div></th>
+            <th><div id="cron_{{.SchdId}}">{{.Cron}}</div></th>
+            <th><div id="job_id{{.SchdId}}">{{.JobId}}</div></th>
+            <th><div id="start_time_{{.SchdId}}">{{.StartTime}}</div></th>
+            <th><div id="end_time_{{.SchdId}}">{{.EndTime}}</div></th>
+            <th><div id="status_{{.SchdId}}">{{.Status}}</div></th>
+            <th><div id="dbhost_{{.SchdId}}">{{.Host}}</div></th>
+          </tr>
+          {{end}}
+        {{end}}
+        </tbody>
+      </table>
+    </div>
+    
+    
+    {{template "footer.html" .}}

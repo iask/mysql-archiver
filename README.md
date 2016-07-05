@@ -3,8 +3,11 @@ go build -ldflags "-w" -o bin/archiver archiver.go
 
 # init env
   1 login your all mysql instance and execute grants
+
     GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, REPLICATION SLAVE ON *.* TO 'ptarchiver'@'your archiver admin IP' IDENTIFIED BY 'xxx';
+
   2 import admin schema
+
     mysql -uroot -p < archiver.sql
 
 

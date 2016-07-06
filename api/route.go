@@ -1,15 +1,9 @@
 package api
 
 import (
-	"net/http"
-
 	"github.com/gorilla/mux"
+	"net/http"
 )
-
-//Ver is the version of the api
-const Ver = "/v1"
-
-//var Ver = API.Uri
 
 //Route is the struct of the route
 type Route struct {
@@ -23,12 +17,12 @@ type Route struct {
 type Routes []Route
 
 //NewRouter news routers
-func NewRouter() *mux.Router {
+func NewRouter(Uri string) *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 	for _, route := range routes {
 		router.
 			Methods(route.Method).
-			Path(route.Pattern).
+			Path(Uri + route.Pattern).
 			Name(route.Name).
 			Handler(route.HandlerFunc)
 	}
@@ -37,33 +31,33 @@ func NewRouter() *mux.Router {
 
 var routes = Routes{
 	Route{
-		"SchdsAdd", "POST", Ver + "/schds", myHandle(AddSchd),
+		"SchdsAdd", "POST", "/schds", myHandle(AddSchd),
 	},
 	Route{
-		"SchdsDel", "DELETE", Ver + "/schds/{id:[0-9]+}", myHandle(DelSchd),
+		"SchdsDel", "DELETE", "/schds/{id:[0-9]+}", myHandle(DelSchd),
 	},
 	Route{
-		"SchdsModify", "POST", Ver + "/schds/{id:[0-9]+}", myHandle(UpdateSchd),
+		"SchdsModify", "POST", "/schds/{id:[0-9]+}", myHandle(UpdateSchd),
 	},
 	Route{
-		"SchdList", "GET", Ver + "/schds", myHandle(ListSchds),
+		"SchdList", "GET", "/schds", myHandle(ListSchds),
 	},
 	Route{
-		"Schd", "GET", Ver + "/schds/{id:[0-9]+}", myHandle(ListSchds),
+		"Schd", "GET", "/schds/{id:[0-9]+}", myHandle(ListSchds),
 	},
 	Route{
-		"SchdRun", "GET", Ver + "/schds/{id:[0-9]+}/{mode:[1-3]}", myHandle(RunSchd),
+		"SchdRun", "GET", "/schds/{id:[0-9]+}/{mode:[1-3]}", myHandle(RunSchd),
 	},
 	Route{
-		"JobList", "GET", Ver + "/jobs", myHandle(ListJobs),
+		"JobList", "GET", "/jobs", myHandle(ListJobs),
 	},
 	Route{
-		"Jobs8Id", "GET", Ver + "/jobs/{id:[0-9]+}", myHandle(ListJobs),
+		"Jobs8Id", "GET", "/jobs/{id:[0-9]+}", myHandle(ListJobs),
 	},
 	Route{
-		"JobLog", "GET", Ver + "/jobs/{id:[0-9]+}/log", myHandle(JobLog),
+		"JobLog", "GET", "/jobs/{id:[0-9]+}/log", myHandle(JobLog),
 	},
 	Route{
-		"Crons", "GET", Ver + "/crons", myHandle(ListCron),
+		"Crons", "GET", "/crons", myHandle(ListCron),
 	},
 }

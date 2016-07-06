@@ -1,12 +1,9 @@
 package web
 
 import (
-	"net/http"
-
 	"github.com/gorilla/mux"
+	"net/http"
 )
-
-var Ver = "/archiver"
 
 //Route is the struct of the route
 type Route struct {
@@ -20,12 +17,12 @@ type Route struct {
 type Routes []Route
 
 //NewRouter news routers
-func NewRouter() *mux.Router {
+func NewRouter(Uri string) *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 	for _, route := range routes {
 		router.
 			Methods(route.Method).
-			Path(route.Pattern).
+			Path(Uri + route.Pattern).
 			Name(route.Name).
 			Handler(route.HandlerFunc)
 	}
@@ -39,36 +36,36 @@ func NewRouter() *mux.Router {
 
 var routes = Routes{
 	Route{
-		"SchdsAdd", "POST", Ver + "/schds", myHandle(AddSchd),
+		"SchdsAdd", "POST", "/schds", myHandle(AddSchd),
 	},
 	Route{
-		"SchdsDel", "GET", Ver + "/schds/del/{id:[0-9]+}", myHandle(DelSchd),
+		"SchdsDel", "GET", "/schds/del/{id:[0-9]+}", myHandle(DelSchd),
 	},
 	Route{
-		"SchdsModify", "POST", Ver + "/schds/{id:[0-9]+}", myHandle(UpdateSchd),
+		"SchdsModify", "POST", "/schds/{id:[0-9]+}", myHandle(UpdateSchd),
 	},
 	Route{
-		"SchdList", "GET", Ver + "/schds", myHandle(ListSchd),
+		"SchdList", "GET", "/schds", myHandle(ListSchd),
 	},
 	Route{
-		"SchdGet", "GET", Ver + "/schds/{id:[0-9]+}", myHandle(GetSchd),
+		"SchdGet", "GET", "/schds/{id:[0-9]+}", myHandle(GetSchd),
 	},
 	Route{
-		"SchdRun", "GET", Ver + "/schds/{id:[0-9]+}/{mode:[1-2]}", myHandle(DryRun),
+		"SchdRun", "GET", "/schds/{id:[0-9]+}/{mode:[1-2]}", myHandle(DryRun),
 	},
 	Route{
-		"JobList", "GET", Ver + "/jobs", myHandle(ListJobs),
+		"JobList", "GET", "/jobs", myHandle(ListJobs),
 	},
 	Route{
-		"JobLog", "GET", Ver + "/jobs/{id:[0-9]+}/log", myHandle(JobLog),
+		"JobLog", "GET", "/jobs/{id:[0-9]+}/log", myHandle(JobLog),
 	},
 	Route{
-		"Crons", "GET", Ver + "/crons", myHandle(ListCron),
+		"Crons", "GET", "/crons", myHandle(ListCron),
 	},
 	Route{
-		"Logout", "GET", Ver + "/logout", myHandle(Logout),
+		"Logout", "GET", "/logout", myHandle(Logout),
 	},
 	Route{
-		"XboxTags", "GET", Ver + "/tags", myHandle(XboxTags),
+		"XboxTags", "GET", "/tags", myHandle(XboxTags),
 	},
 }

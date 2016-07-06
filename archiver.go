@@ -14,7 +14,7 @@ func main() {
 	api.ErrorLog(fmt.Sprintf("OK, api service listen at: %s\n", apiConf.Api.Port))
 	go api.MgtCron()
 	go func() {
-		err := http.ListenAndServe(":"+apiConf.Api.Port, api.NewRouter())
+		err := http.ListenAndServe(":"+apiConf.Api.Port, api.NewRouter(apiConf.Api.Uri))
 		if err != nil {
 			panic(err)
 		}
@@ -23,6 +23,6 @@ func main() {
 	// web service
 	webConf := web.NewConfig()
 	web.ErrorLog(fmt.Sprintf("OK, web service listen at: %s\n", webConf.Web.Port))
-	err := http.ListenAndServe(":"+webConf.Web.Port, web.NewRouter())
+	err := http.ListenAndServe(":"+webConf.Web.Port, web.NewRouter(webConf.Web.Uri))
 	fmt.Println(err)
 }
